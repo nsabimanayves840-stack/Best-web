@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PickMe Up – Ride Smart, Ride Safe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #ff0066, #7f00ff);
+            --secondary-color: #00ffcc;
+            --accent-color: #ff00cc;
+            --bg-dark: #0b1020;
+            --card-bg: #161b33;
+            --text-white: #ffffff;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(11, 16, 32, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-white);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-btn {
+            background: var(--primary-gradient);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            background: url("https://images.unsplash.com/photo-1555515868-3b59e7bca8a8?auto=format&fit=crop&w=1950&q=80") center/cover no-repeat;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to right, rgba(11, 16, 32, 0.9), rgba(11, 16, 32, 0.4));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-content h2 span {
+            color: var(--secondary-color);
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+            color: #ccc;
+            max-width: 500px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 204, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--text-white);
+            color: var(--text-white);
+        }
+
+        .btn-outline:hover {
+            background: var(--text-white);
+            color: var(--bg-dark);
+        }
+
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .section-title .underline {
+            width: 80px;
+            height: 4px;
+            background: var(--primary-gradient);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .features {
+            padding: 100px 5%;
+            background: #0f1529;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary-color);
+        }
+
+        .feature-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 5%;
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .price-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .price-card.popular {
+            border: 2px solid var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--accent-color);
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .price-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .price-card .amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin: 20px 0;
+        }
+
+        .price-card ul {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .price-card ul li {
+            margin-bottom: 12px;
+            color: #aaa;
+        }
+
+        .price-card ul li i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+        }
+
+        /* Booking Form Section */
+        .booking-section {
+            padding: 100px 5%;
+            background: linear-gradient(rgba(11, 16, 32, 0.8), rgba(11, 16, 32, 0.8)), url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1950&q=80') center/cover;
+        }
+
+        .booking-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .booking-info {
+            padding: 50px;
+            background: var(--primary-gradient);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .booking-form {
+            padding: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: #0b1020;
+            border: 1px solid #2a314d;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(0, 255, 204, 0.1);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 5%;
+            background: #0f1529;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-dark);
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 5% 30px;
+            background: #050814;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: #161b33;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary-gradient);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #161b33;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+            .booking-info {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            nav {
+                display: none; /* Simple mobile menu logic could be added */
+            }
+            .hamburger {
+                display: block;
+            }
+            .hero-content h2 {
+                font-size: 2.8rem;
+            }
+            .price-card.popular {
+                transform: scale(1);
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <i class="fas fa-taxi"></i> PickMe Up
+        </div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#booking">Book Now</a>
+            <a href="#drivers" class="nav-btn">Drive with Us</a>
+        </nav>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Your Safe Ride Home, <span>Anytime.</span></h2>
+            <p>Reliable, affordable, and professional ride-sharing service in Kigali. Whether it's a night out or a daily commute, we've got you covered.</p>
+            <div class="hero-btns">
+                <a href="#booking" class="btn btn-primary">Book a Ride</a>
+                <a href="#features" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>Why Choose Us?</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Safety First</h3>
+                <p>Vetted drivers and real-time trip tracking for your peace of mind.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>Fast Pickup</h3>
+                <p>Average wait time under 5 minutes. We're always around the corner.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-wallet"></i>
+                <h3>Fair Pricing</h3>
+                <p>Transparent rates with no hidden fees. Pay with cash or mobile money.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="section-title">
+            <h2>Ride Options</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="price-grid">
+            <div class="price-card">
+                <h3>Economy</h3>
+                <p>Best for quick solo trips</p>
+                <div class="amount">3,500<span> RWF</span></div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Standard Sedans</li>
+                    <li><i class="fas fa-check"></i> Up to 4 passengers</li>
+                    <li><i class="fas fa-check"></i> 24/7 Availability</li>
+                </ul>
+                <a href="#booking" class="btn btn-outline">Select</a>
+            </div>
+            <div class="price-card popular">
+                <div class="badge">POPULAR</div>
+                <h3>Night Owl</h3>
+                <p>Safe party pickups</p>
+                <div class="amount">6,000<span> RWF</span></div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Priority Pickup</li>
+                    <li><i class="fas fa-check"></i> Club/Bar Zones</li>
+                    <li><i class="fas fa-check"></i> Professional Drivers</li>
+                </ul>
+                <a href="#booking" class="btn btn-primary">Select</a>
+            </div>
+            <div class="price-card">
+                <h3>VIP Luxe</h3>
+                <p>Travel in style</p>
+                <div class="amount">15,000<span> RWF</span></div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Premium Vehicles</li>
+                    <li><i class="fas fa-check"></i> Top-rated Drivers</li>
+                    <li><i class="fas fa-check"></i> Complimentary Water</li>
+                </ul>
+                <a href="#booking" class="btn btn-outline">Select</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="booking-section" id="booking">
+        <div class="booking-container">
+            <div class="booking-info">
+                <h2>Ready to Go?</h2>
+                <p>Fill in your details and a driver will be dispatched immediately to your location.</p>
+                <div style="margin-top: 30px;">
+                    <p><i class="fas fa-phone-alt" style="margin-right: 10px;"></i> 0798 811 200</p>
+                    <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Kigali, Rwanda</p>
+                </div>
+            </div>
+            <div class="booking-form">
+                <form id="rideForm" onsubmit="handleBooking(event)">
+                    <div class="form-group">
+                        <label>Pickup Location</label>
+                        <input type="text" placeholder="Enter pickup address" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Destination</label>
+                        <input type="text" placeholder="Where are you going?" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ride Type</label>
+                        <select>
+                            <option>Economy</option>
+                            <option>Night Owl</option>
+                            <option>VIP Luxe</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="section-title">
+            <h2>What Our Riders Say</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p>"The best service in Kigali! I never have to worry about getting home after a late night. The drivers are very professional."</p>
+                <div class="user-info">
+                    <img src="https://i.pravatar.cc/150?u=1" alt="User">
+                    <div>
+                        <h4>Jean-Paul K.</h4>
+                        <small>Regular Rider</small>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p>"Fair prices and very fast. I used the VIP service for a business meeting and was very impressed with the car quality."</p>
+                <div class="user-info">
+                    <img src="https://i.pravatar.cc/150?u=2" alt="User">
+                    <div>
+                        <h4>Sarah M.</h4>
+                        <small>Business Executive</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="drivers" style="padding: 100px 5%; text-align: center;">
+        <div class="section-title">
+            <h2>Become a Driver</h2>
+            <p>Earn money on your own schedule. Join our community of professional drivers.</p>
+            <div class="underline"></div>
+        </div>
+        <div style="max-width: 600px; margin: 0 auto; background: var(--card-bg); padding: 40px; border-radius: 20px;">
+            <form onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <select>
+                        <option>Motorbike</option>
+                        <option>Car</option>
+                        <option>Van</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Plate Number" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Apply to Drive</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 20px;">
+                    <i class="fas fa-taxi"></i> PickMe Up
+                </div>
+                <p>Providing safe and reliable transportation across Rwanda since 2024.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#drivers">Become a Driver</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Guidelines</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul>
+                    <li><i class="fas fa-envelope" style="margin-right: 10px;"></i> support@pickmeup.rw</li>
+                    <li><i class="fas fa-phone" style="margin-right: 10px;"></i> 0798 811 200</li>
+                    <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Kigali, Rwanda</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 PickMe Up Rwanda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--secondary-color); margin-bottom: 20px;"></i>
+            <h2 id="modalTitle">Success!</h2>
+            <p id="modalMessage" style="margin: 15px 0; color: #ccc;"></p>
+            <button class="btn btn-primary" onclick="closeModal()">Great!</button>
+        </div>
+    </div>
+
+    <script>
+        function handleBooking(e) {
+            e.preventDefault();
+            showModal("Booking Confirmed!", "Your driver is being dispatched. You will receive an SMS with driver details shortly.");
+            e.target.reset();
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            showModal("Application Received!", "Thank you for joining PickMe Up. Our team will review your application and contact you within 24 hours.");
+            e.target.reset();
+        }
+
+        function showModal(title, message) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = message;
+            document.getElementById('successModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            let modal = document.getElementById('successModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Simple Scroll Animation for Header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.padding = '10px 5%';
+                header.style.background = 'rgba(11, 16, 32, 0.98)';
+            } else {
+                header.style.padding = '15px 5%';
+                header.style.background = 'rgba(11, 16, 32, 0.95)';
+            }
+        });
+    </script>
+
+</body>
+</html>
